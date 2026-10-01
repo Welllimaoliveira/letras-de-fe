@@ -3,11 +3,11 @@
 -- Rode este arquivo inteiro no SQL Editor do projeto Supabase
 -- (Dashboard → SQL Editor → New query → cola tudo → Run).
 --
--- IMPORTANTE: troque o e-mail dentro da função handle_new_user()
--- logo abaixo (procure TROQUE_PARA_O_EMAIL_DA_SUA_MAE) pelo e-mail
--- real da autora ANTES de rodar. É esse e-mail que vira "autora"
--- automaticamente ao criar a conta pelo site. Este arquivo roda
--- direto no SQL Editor do Supabase (cola tudo e dá Run).
+-- Os e-mails configurados como "autora" (master) abaixo, na função
+-- handle_new_user(), viram automaticamente autoras ao criar conta pelo
+-- site: luciadelimadeoliveira@gmail.com, wellinson25@hotmail.com e
+-- linndaolivier@gmail.com.
+-- Este arquivo roda direto no SQL Editor do Supabase (cola tudo e dá Run).
 -- ============================================================
 
 -- ------------------------------------------------------------
@@ -114,7 +114,11 @@ security definer
 set search_path = public
 as $$
 begin
-  if lower(new.email) = lower('TROQUE_PARA_O_EMAIL_DA_SUA_MAE@gmail.com') then
+  if lower(new.email) = any (array[
+    'luciadelimadeoliveira@gmail.com',
+    'wellinson25@hotmail.com',
+    'linndaolivier@gmail.com'
+  ]) then
     insert into public.profiles (id, email, nome, role)
     values (new.id, new.email, coalesce(new.raw_user_meta_data->>'nome', new.email), 'autora')
     on conflict (id) do nothing;
