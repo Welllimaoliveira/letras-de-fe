@@ -1,0 +1,758 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#8a5a3b">
+<meta name="description" content="Livros e escritos sobre a Palavra.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Letras de Fé</title>
+<style>
+:root{
+  --cor-primaria:#8a5a3b; --cor-fundo:#faf6ef;
+  --bg:var(--cor-fundo); --panel:#ffffff; --panel2:#f3ead9; --line:#e4d7c1;
+  --txt:#2b241d; --mut:#796b58; --gold:var(--cor-primaria); --goldsoft:#b08f68;
+  --green:#4c8d5b; --red:#b2433a; --blue:#4a6fa5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--txt);
+  font-family:'Inter',system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+.serif{font-family:'Lora',Georgia,'Iowan Old Style',serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+a{color:var(--gold)}
+.hidden{display:none!important}
+img{max-width:100%;display:block}
+.app{max-width:760px;margin:auto;min-height:100vh;
+  padding:0 16px calc(32px + env(safe-area-inset-bottom))}
+.top{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:8;
+  background:rgba(250,246,239,.92);backdrop-filter:blur(6px);padding:14px 0;
+  border-bottom:1px solid var(--line);margin-bottom:8px}
+.brand{font-family:'Lora',serif;font-weight:700;font-size:21px;letter-spacing:.2px;cursor:pointer}
+.brand small{display:block;font-size:11px;color:var(--mut);font-weight:600;letter-spacing:.3px;
+  text-transform:uppercase;font-family:'Inter',sans-serif}
+.back{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:8px 12px;font-weight:700}
+.spacer{flex:1}
+.navlink{border:0;background:none;color:var(--mut);font-weight:700;font-size:13px;padding:8px 6px}
+.navlink.on{color:var(--gold)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;margin:14px 0;
+  box-shadow:0 1px 2px rgba(60,45,25,.04)}
+.card h2{margin:.1em 0 .4em;font-family:'Lora',serif}
+.mut{color:var(--mut)}
+.small{font-size:13px}
+.row{display:flex;gap:10px;align-items:center}
+.wrap{flex-wrap:wrap}
+.grow{flex:1}
+.pill{display:inline-flex;align-items:center;gap:5px;background:var(--panel2);border:1px solid var(--line);
+  border-radius:999px;padding:4px 11px;font-size:12px;font-weight:700}
+.pill.gold{color:var(--gold)}
+.pill.green{color:var(--green)}
+.pill.muted{color:var(--mut)}
+.btn{border:1px solid var(--line);background:var(--panel);border-radius:13px;padding:11px 16px;font-weight:700}
+.btn.primary{border:0;background:var(--gold);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.btn.primary:active{transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.btn.wide{width:100%}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.danger{color:var(--red);border-color:#e3b3ae}
+.btn:disabled{opacity:.45;pointer-events:none}
+.hero{text-align:center;padding:20px 6px 10px}
+.hero .ph{width:92px;height:92px;border-radius:50%;object-fit:cover;margin:0 auto 10px;border:3px solid var(--panel2)}
+.hero h1{font-family:'Lora',serif;margin:4px 0;font-size:28px}
+.field,select.field,textarea.field{width:100%;border:1px solid var(--line);background:var(--panel);
+  border-radius:12px;padding:11px 13px}
+textarea.field{resize:vertical;line-height:1.6}
+.grid-livros{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin-top:8px}
+.livro-card{text-align:left;border:0;background:none;padding:0}
+.capa{width:100%;aspect-ratio:3/4;border-radius:10px;background:var(--panel2);overflow:hidden;
+  display:flex;align-items:center;justify-content:center;border:1px solid var(--line);box-shadow:0 4px 10px rgba(60,45,25,.12)}
+.capa img{width:100%;height:100%;object-fit:cover}
+.capa .ph{font-size:34px;color:var(--goldsoft)}
+.livro-card b{display:block;margin-top:8px;font-family:'Lora',serif;font-size:14px}
+.livro-card small{color:var(--mut)}
+.list-item{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:13px;margin:9px 0}
+.list-item h3{margin:0 0 4px;font-family:'Lora',serif}
+.capitulo-row{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:10px 0}
+.capitulo-row:last-child{border-bottom:0}
+.capitulo-row .ord{display:flex;flex-direction:column;gap:2px}
+.capitulo-row .ord button{border:1px solid var(--line);background:var(--panel2);border-radius:7px;width:22px;height:18px;font-size:10px}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:60;background:#2b241d;color:#fff;
+  border-radius:999px;padding:10px 16px;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.loading{text-align:center;color:var(--mut);padding:30px}
+.modal{position:fixed;inset:0;background:rgba(30,22,12,.5);z-index:40;display:flex;align-items:flex-end;
+  justify-content:center;padding:0}
+.modalbox{width:min(640px,100%);max-height:90vh;overflow:auto;background:var(--bg);
+  border-radius:22px 22px 0 0;padding:18px;border:1px solid var(--line)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:14px;flex-wrap:wrap}
+.tabs button{border:0;background:none;padding:9px 12px;font-weight:700;color:var(--mut);border-radius:10px 10px 0 0}
+.tabs button.on{color:var(--gold);background:var(--panel2)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.swatch{width:30px;height:30px;border-radius:50%;border:2px solid var(--line);cursor:pointer}
+.swatch.on{outline:2px solid var(--gold);outline-offset:2px}
+.sugestao{border-left:3px solid var(--gold);background:var(--panel2);border-radius:0 12px 12px 0;
+  padding:10px 12px;margin:9px 0}
+.sugestao .de{color:var(--red);text-decoration:line-through;font-size:13px}
+.sugestao .para{color:var(--green);font-weight:700;font-size:13px}
+.sugestao .motivo{color:var(--mut);font-size:12px;margin-top:4px}
+.sugestao .acoes{margin-top:8px;display:flex;gap:8px}
+.sugestao .acoes button{font-size:12px;padding:6px 10px}
+.leitura-wrap[data-modo="sepia"]{--bg:#f4ecd8;--panel:#f4ecd8;--txt:#3a2f1e}
+.leitura-wrap[data-modo="escuro"]{--bg:#1c1a16;--panel:#1c1a16;--txt:#eee6d6;--panel2:#2a261f;--line:#3a352c;--mut:#a89a82}
+.leitura-texto{font-family:'Lora',serif;font-size:var(--fs,19px);line-height:1.85}
+.leitura-texto h1,.leitura-texto h2,.leitura-texto h3{font-family:'Lora',serif;margin:1.2em 0 .5em}
+.leitura-texto blockquote{border-left:3px solid var(--gold);margin:1em 0;padding:.2em 1em;color:var(--mut);font-style:italic}
+.leitura-texto p{margin:0 0 1em}
+.leitura-bar{position:sticky;top:60px;z-index:7;background:var(--bg);border:1px solid var(--line);
+  border-radius:14px;padding:8px 10px;display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.leitura-bar button{border:1px solid var(--line);background:var(--panel2);border-radius:9px;padding:6px 10px;font-size:13px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line)}
+.check:last-child{border-bottom:0}
+@media(max-width:420px){.grid-livros{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <button id="backBtn" class="back hidden">‹</button>
+    <div class="brand" id="brandBtn">Letras<br><small id="brandSub">de Fé</small></div>
+    <div class="spacer"></div>
+    <button class="navlink" id="navEntrar">Entrar</button>
+    <button class="navlink hidden" id="navPainel">Painel</button>
+  </div>
+  <div id="root"></div>
+</div>
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+/* ============================================================
+   CONFIG — preencha depois de criar o projeto no Supabase
+   (Project Settings → API → Project URL / anon public key)
+   ============================================================ */
+const SUPABASE_URL = "COLE_AQUI_A_URL_DO_SUPABASE";
+const SUPABASE_ANON_KEY = "COLE_AQUI_A_ANON_KEY_DO_SUPABASE";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+});
+
+/* ---------- util ---------- */
+const $ = s => document.querySelector(s);
+const root = $("#root"), backBtn = $("#backBtn"), brandSub = $("#brandSub");
+function esc(s){ const d=document.createElement("div"); d.textContent = s==null?"":String(s); return d.innerHTML; }
+function el(html){ const t=document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+function toast(t){ const n=$("#toast"); n.textContent=t; n.classList.remove("hidden"); clearTimeout(toast._t); toast._t=setTimeout(()=>n.classList.add("hidden"),2200); }
+function slugify(s){
+  return (s||"").toString().normalize("NFD").replace(/[̀-ͯ]/g,"")
+    .toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"").slice(0,80) || "livro";
+}
+function fmtData(iso){ if(!iso) return ""; const d=new Date(iso); if(isNaN(d)) return ""; return d.toLocaleDateString("pt-BR"); }
+
+/* mini markdown -> html (negrito, itálico, títulos, citação, listas, parágrafos) */
+function mdToHtml(src){
+  const linhas = (src||"").replace(/\r\n/g,"\n").split("\n");
+  let html = "", emLista = false, emCitacao = false;
+  const fechar = ()=>{ if(emLista){html+="</ul>";emLista=false;} if(emCitacao){html+="</blockquote>";emCitacao=false;} };
+  const inline = t => esc(t)
+    .replace(/\*\*(.+?)\*\*/g,"<b>$1</b>")
+    .replace(/\*(.+?)\*/g,"<i>$1</i>");
+  for(const linhaRaw of linhas){
+    const linha = linhaRaw.trim();
+    if(!linha){ fechar(); continue; }
+    if(/^###\s+/.test(linha)){ fechar(); html+=`<h3>${inline(linha.replace(/^###\s+/,""))}</h3>`; continue; }
+    if(/^##\s+/.test(linha)){ fechar(); html+=`<h2>${inline(linha.replace(/^##\s+/,""))}</h2>`; continue; }
+    if(/^#\s+/.test(linha)){ fechar(); html+=`<h1>${inline(linha.replace(/^#\s+/,""))}</h1>`; continue; }
+    if(/^[-*]\s+/.test(linha)){ if(emCitacao){html+="</blockquote>";emCitacao=false;} if(!emLista){html+="<ul>";emLista=true;} html+=`<li>${inline(linha.replace(/^[-*]\s+/,""))}</li>`; continue; }
+    if(/^>\s?/.test(linha)){ if(emLista){html+="</ul>";emLista=false;} if(!emCitacao){html+="<blockquote>";emCitacao=true;} html+=inline(linha.replace(/^>\s?/,""))+" "; continue; }
+    fechar(); html+=`<p>${inline(linha)}</p>`;
+  }
+  fechar();
+  return html || "<p class='mut'>Comece a escrever…</p>";
+}
+
+/* ---------- estado ---------- */
+let S = { session:null, profile:null, config:null, livroAtual:null, livrosCache:null };
+
+/* preferência de leitura (só local, não é o tema do site) */
+const LK = "letras_leitura_pref";
+function leituraPref(){ try{ return Object.assign({modo:"claro", fs:19}, JSON.parse(localStorage.getItem(LK))); }catch(e){ return {modo:"claro", fs:19}; } }
+function salvarLeituraPref(p){ try{ localStorage.setItem(LK, JSON.stringify(p)); }catch(e){} }
+
+/* ---------- router ---------- */
+const SCREENS = {};
+let current = "inicio";
+const stack = [];
+function go(name, params){
+  if(name !== current || params) stack.push([current, null]);
+  current = name;
+  render_(params || {});
+}
+function back(){
+  const prev = stack.pop();
+  current = prev ? prev[0] : "inicio";
+  render_({});
+}
+function render_(params){
+  window.scrollTo(0,0);
+  backBtn.classList.toggle("hidden", current === "inicio");
+  const scr = SCREENS[current] || SCREENS.inicio;
+  root.innerHTML = "";
+  if(scr.render) scr.render(params || {});
+}
+backBtn.onclick = back;
+$("#brandBtn").onclick = ()=>{ current="inicio"; stack.length=0; go("inicio"); };
+$("#navEntrar").onclick = ()=> go("entrar");
+$("#navPainel").onclick = ()=> go("painel");
+
+/* ---------- tema do site (config_site) ---------- */
+function aplicarTema(cfg){
+  if(!cfg) return;
+  document.documentElement.style.setProperty("--cor-primaria", cfg.cor_primaria || "#8a5a3b");
+  document.documentElement.style.setProperty("--cor-fundo", cfg.cor_fundo || "#faf6ef");
+  document.title = cfg.nome_site || "Letras de Fé";
+  $("#brandBtn").innerHTML = `${esc(cfg.nome_site||"Letras de Fé")}<br><small>${esc(cfg.subtitulo||"de Fé")}</small>`;
+}
+
+/* ============================================================
+   INÍCIO
+   ============================================================ */
+SCREENS.inicio = {
+  async render(){
+    root.append(el(`<div class="loading">Carregando…</div>`));
+    const [{data:livros}, {data:capitulos}] = await Promise.all([
+      supabase.from("livros").select("*").eq("status","publicado").order("ordem"),
+      supabase.from("capitulos").select("id,titulo,livro_id,updated_at,livros(titulo,slug,status)")
+        .eq("status","publicado").order("updated_at",{ascending:false}).limit(6)
+    ]);
+    root.innerHTML = "";
+    const cfg = S.config || {};
+    root.append(el(`
+      <div>
+        <div class="hero">
+          ${cfg.foto_autora_url?`<img class="ph" src="${esc(cfg.foto_autora_url)}">`:""}
+          <h1>${esc(cfg.nome_site||"Letras de Fé")}</h1>
+          <p class="mut">${esc(cfg.subtitulo||"")}</p>
+          ${cfg.bio_autora?`<p class="small" style="max-width:520px;margin:10px auto">${esc(cfg.bio_autora)}</p>`:""}
+        </div>
+        <div class="card">
+          <h2>📚 Livros</h2>
+          <div class="grid-livros" id="gridLivros"></div>
+        </div>
+        <div class="card" id="cardRecentes"><h2>🕊️ Últimos escritos</h2><div id="recentes"></div></div>
+      </div>`));
+    const grid = $("#gridLivros");
+    if(!livros || !livros.length) grid.append(el(`<p class="mut small">Ainda não há livros publicados.</p>`));
+    (livros||[]).forEach(l=>{
+      const b = el(`<button class="livro-card">
+        <div class="capa" style="border-color:${esc(l.cor_destaque||'#e4d7c1')}">
+          ${l.capa_url?`<img src="${esc(l.capa_url)}">`:`<span class="ph">📖</span>`}
+        </div>
+        <b>${esc(l.titulo)}</b><small>${esc((l.sinopse||"").slice(0,40))}</small>
+      </button>`);
+      b.onclick = ()=> go("livro", {slug:l.slug});
+      grid.append(b);
+    });
+    const rec = $("#recentes");
+    if(!capitulos || !capitulos.length){ $("#cardRecentes").classList.add("hidden"); }
+    (capitulos||[]).filter(c=>c.livros && c.livros.status==="publicado").forEach(c=>{
+      const it = el(`<div class="list-item">
+        <div class="row"><b class="grow">${esc(c.titulo)}</b><span class="mut small">${fmtData(c.updated_at)}</span></div>
+        <p class="small mut">${esc(c.livros.titulo)}</p>
+      </div>`);
+      it.style.cursor="pointer";
+      it.onclick = ()=> go("leitura", {livroSlug:c.livros.slug, capituloId:c.id});
+      rec.append(it);
+    });
+  }
+};
+
+/* ============================================================
+   LIVRO (sumário)
+   ============================================================ */
+SCREENS.livro = {
+  async render({slug}){
+    root.append(el(`<div class="loading">Carregando…</div>`));
+    const { data: livro } = await supabase.from("livros").select("*").eq("slug",slug).single();
+    if(!livro){ root.innerHTML=""; root.append(el(`<div class="card">Livro não encontrado.</div>`)); return; }
+    let q = supabase.from("capitulos").select("*").eq("livro_id",livro.id).order("ordem");
+    if(!(S.profile)) q = q.eq("status","publicado");
+    const { data: capitulos } = await q;
+    root.innerHTML = "";
+    root.append(el(`
+      <div>
+        <div class="card" style="text-align:center">
+          <div class="capa" style="max-width:200px;margin:0 auto 12px;border-color:${esc(livro.cor_destaque||'#e4d7c1')}">
+            ${livro.capa_url?`<img src="${esc(livro.capa_url)}">`:`<span class="ph">📖</span>`}
+          </div>
+          <h2 class="serif">${esc(livro.titulo)}</h2>
+          <p class="mut">${esc(livro.sinopse||"")}</p>
+        </div>
+        <div class="card">
+          <h2>Sumário</h2>
+          <div id="toc"></div>
+        </div>
+      </div>`));
+    const toc = $("#toc");
+    if(!capitulos || !capitulos.length) toc.append(el(`<p class="mut small">Nenhum capítulo publicado ainda.</p>`));
+    (capitulos||[]).forEach((c,i)=>{
+      const row = el(`<div class="list-item" style="cursor:pointer">
+        <div class="row"><b class="grow">${i+1}. ${esc(c.titulo)}</b>
+        ${c.status!=="publicado"?`<span class="pill muted">${esc(c.status)}</span>`:""}</div>
+      </div>`);
+      row.onclick = ()=> go("leitura", {livroSlug:slug, capituloId:c.id});
+      toc.append(row);
+    });
+  }
+};
+
+/* ============================================================
+   LEITURA
+   ============================================================ */
+SCREENS.leitura = {
+  async render({livroSlug, capituloId}){
+    root.append(el(`<div class="loading">Carregando…</div>`));
+    const { data: livro } = await supabase.from("livros").select("*").eq("slug",livroSlug).single();
+    const { data: capitulo } = await supabase.from("capitulos").select("*").eq("id",capituloId).single();
+    if(!livro || !capitulo){ root.innerHTML=""; root.append(el(`<div class="card">Capítulo não encontrado.</div>`)); return; }
+    let q = supabase.from("capitulos").select("id,titulo,ordem").eq("livro_id",livro.id).order("ordem");
+    if(!(S.profile)) q = q.eq("status","publicado");
+    const { data: todos } = await q;
+    root.innerHTML = "";
+    const pref = leituraPref();
+    const idx = (todos||[]).findIndex(c=>c.id===capituloId);
+    const anterior = idx>0 ? todos[idx-1] : null;
+    const proximo = idx>=0 && idx<(todos||[]).length-1 ? todos[idx+1] : null;
+    const wrap = el(`
+      <div class="leitura-wrap" data-modo="${pref.modo}">
+        <p class="small mut">${esc(livro.titulo)}</p>
+        <h1 class="serif" style="margin:4px 0 14px">${esc(capitulo.titulo)}</h1>
+        <div class="leitura-bar">
+          <button data-modo="claro">☀️ Claro</button>
+          <button data-modo="sepia">📜 Sépia</button>
+          <button data-modo="escuro">🌙 Escuro</button>
+          <span class="spacer"></span>
+          <button id="fsMenos">A-</button>
+          <button id="fsMais">A+</button>
+        </div>
+        <div class="leitura-texto" id="texto" style="font-size:${pref.fs}px">${mdToHtml(capitulo.conteudo)}</div>
+        <div class="row wrap" style="margin-top:22px">
+          <button class="btn grow" id="btnAnt" ${anterior?"":"disabled"}>‹ Anterior</button>
+          <button class="btn primary grow" id="btnProx" ${proximo?"":"disabled"}>Próximo ›</button>
+        </div>
+      </div>`);
+    root.append(wrap);
+    wrap.querySelectorAll("[data-modo]").forEach(b=> b.onclick = ()=>{
+      const p = leituraPref(); p.modo = b.dataset.modo; salvarLeituraPref(p); wrap.dataset.modo = p.modo;
+    });
+    $("#fsMais").onclick = ()=>{ const p=leituraPref(); p.fs=Math.min(28,p.fs+1); salvarLeituraPref(p); $("#texto").style.fontSize=p.fs+"px"; };
+    $("#fsMenos").onclick = ()=>{ const p=leituraPref(); p.fs=Math.max(14,p.fs-1); salvarLeituraPref(p); $("#texto").style.fontSize=p.fs+"px"; };
+    if(anterior) $("#btnAnt").onclick = ()=> go("leitura", {livroSlug, capituloId:anterior.id});
+    if(proximo) $("#btnProx").onclick = ()=> go("leitura", {livroSlug, capituloId:proximo.id});
+  }
+};
+
+/* ============================================================
+   ENTRAR
+   ============================================================ */
+SCREENS.entrar = {
+  render(){
+    if(S.profile){ go("painel"); return; }
+    root.append(el(`
+      <div class="card" style="max-width:380px;margin:30px auto">
+        <h2>Área da autora</h2>
+        <p class="mut small">Login restrito. Leitores não precisam de conta.</p>
+        <input class="field" id="eEmail" type="email" placeholder="e-mail" style="margin-bottom:8px">
+        <input class="field" id="eSenha" type="password" placeholder="senha" style="margin-bottom:12px">
+        <button class="btn primary wide" id="eEntrar">Entrar</button>
+        <button class="btn wide ghost" id="eCriar" style="margin-top:8px">Criar conta (primeira vez)</button>
+        <p class="small mut" id="eMsg" style="margin-top:10px"></p>
+      </div>`));
+    const msg = $("#eMsg");
+    $("#eEntrar").onclick = async ()=>{
+      const email=$("#eEmail").value.trim(), senha=$("#eSenha").value;
+      if(!email||!senha){ msg.textContent="Preencha e-mail e senha."; return; }
+      msg.textContent="Entrando...";
+      const { error } = await supabase.auth.signInWithPassword({email, password:senha});
+      if(error){ msg.textContent = "Não consegui entrar: "+error.message; return; }
+      msg.textContent = "";
+    };
+    $("#eCriar").onclick = async ()=>{
+      const email=$("#eEmail").value.trim(), senha=$("#eSenha").value;
+      if(!email||!senha||senha.length<6){ msg.textContent="E-mail e senha (mín. 6 caracteres)."; return; }
+      msg.textContent="Criando conta...";
+      const { error } = await supabase.auth.signUp({email, password:senha});
+      if(error){ msg.textContent = "Não consegui criar: "+error.message; return; }
+      msg.textContent = "Conta criada. Se pedir confirmação, cheque o e-mail; senão, já está logado.";
+    };
+  }
+};
+
+/* ============================================================
+   PAINEL DA AUTORA
+   ============================================================ */
+let painelView = "livros";
+let painelLivro = null;   // livro selecionado (objeto)
+let painelCap = null;     // capítulo em edição (objeto ou null = novo)
+
+SCREENS.painel = {
+  render(){
+    if(!S.profile){ go("entrar"); return; }
+    root.append(el(`
+      <div>
+        <div class="tabs" id="pTabs">
+          <button data-v="livros">Meus livros</button>
+          <button data-v="aparencia">Aparência</button>
+          <button data-v="sair">Sair</button>
+        </div>
+        <div id="pBody"></div>
+      </div>`));
+    $("#pTabs").querySelectorAll("button").forEach(b=>{
+      b.classList.toggle("on", b.dataset.v===painelView);
+      b.onclick = async ()=>{
+        if(b.dataset.v==="sair"){ await supabase.auth.signOut(); toast("Saiu."); go("inicio"); return; }
+        painelView = b.dataset.v; painelLivro=null; painelCap=null; SCREENS.painel.render();
+      };
+    });
+    if(painelView==="aparencia") return renderAparencia();
+    if(painelLivro) return renderLivroPainel();
+    return renderListaLivros();
+  }
+};
+
+async function renderListaLivros(){
+  const body = $("#pBody");
+  body.append(el(`<div class="loading">Carregando seus livros…</div>`));
+  const { data: livros, error } = await supabase.from("livros").select("*").order("ordem");
+  body.innerHTML = "";
+  body.append(el(`<button class="btn primary wide" id="novoLivro">+ Novo livro</button>`));
+  $("#novoLivro").onclick = ()=> abrirModalLivro(null);
+  if(error){ body.append(el(`<p class="mut small">Erro: ${esc(error.message)}</p>`)); return; }
+  (livros||[]).forEach(l=>{
+    const row = el(`<div class="list-item">
+      <div class="row"><b class="grow">${esc(l.titulo)}</b>
+        <span class="pill ${l.status==='publicado'?'green':'muted'}">${esc(l.status)}</span></div>
+      <p class="small mut">${esc(l.sinopse||"")}</p>
+      <div class="row wrap" style="margin-top:8px">
+        <button class="btn small" data-a="abrir">Capítulos</button>
+        <button class="btn small" data-a="editar">Editar</button>
+        <button class="btn small" data-a="status">${l.status==='publicado'?'Tornar rascunho':'Publicar'}</button>
+        <button class="btn small danger" data-a="apagar">Apagar</button>
+      </div>
+    </div>`);
+    row.querySelector('[data-a="abrir"]').onclick = ()=>{ painelLivro=l; SCREENS.painel.render(); };
+    row.querySelector('[data-a="editar"]').onclick = ()=> abrirModalLivro(l);
+    row.querySelector('[data-a="status"]').onclick = async ()=>{
+      const novo = l.status==='publicado' ? 'rascunho' : 'publicado';
+      const { error } = await supabase.from("livros").update({status:novo}).eq("id",l.id);
+      if(error) toast("Erro: "+error.message); else { toast("Atualizado."); renderListaLivros(); }
+    };
+    row.querySelector('[data-a="apagar"]').onclick = async ()=>{
+      if(!confirm(`Apagar "${l.titulo}" e todos os capítulos dele? Não dá pra desfazer.`)) return;
+      const { error } = await supabase.from("livros").delete().eq("id",l.id);
+      if(error) toast("Erro: "+error.message); else { toast("Apagado."); renderListaLivros(); }
+    };
+    body.append(row);
+  });
+}
+
+function abrirModalLivro(livro){
+  const bg = el(`<div class="modal"><div class="modalbox">
+    <h2>${livro?"Editar livro":"Novo livro"}</h2>
+    <label class="small mut">Título</label>
+    <input class="field" id="mTitulo" value="${esc(livro?.titulo||"")}" style="margin-bottom:8px">
+    <label class="small mut">Sinopse</label>
+    <textarea class="field" id="mSinopse" rows="3" style="margin-bottom:8px">${esc(livro?.sinopse||"")}</textarea>
+    <label class="small mut">Cor de destaque</label>
+    <div class="swatches" id="mCores" style="margin-bottom:10px"></div>
+    <label class="small mut">Capa (imagem)</label>
+    <input class="field" id="mCapa" type="file" accept="image/*" style="margin-bottom:12px">
+    <div class="row">
+      <button class="btn grow" id="mCancelar">Cancelar</button>
+      <button class="btn primary grow" id="mSalvar">Salvar</button>
+    </div>
+    <p class="small mut" id="mMsg" style="margin-top:8px"></p>
+  </div></div>`);
+  document.body.append(bg);
+  const CORES = ["#8a5a3b","#6b4226","#b08968","#4c6b54","#4a6fa5","#9a3b4e","#7a6f58"];
+  let corEscolhida = livro?.cor_destaque || CORES[0];
+  const cw = $("#mCores");
+  CORES.forEach(c=>{
+    const s = el(`<button class="swatch ${c===corEscolhida?'on':''}" style="background:${c}"></button>`);
+    s.onclick = ()=>{ corEscolhida=c; cw.querySelectorAll(".swatch").forEach(x=>x.classList.remove("on")); s.classList.add("on"); };
+    cw.append(s);
+  });
+  $("#mCancelar").onclick = ()=> bg.remove();
+  $("#mSalvar").onclick = async ()=>{
+    const titulo = $("#mTitulo").value.trim();
+    if(!titulo){ $("#mMsg").textContent="Dá um título pro livro."; return; }
+    $("#mMsg").textContent = "Salvando...";
+    const sinopse = $("#mSinopse").value.trim();
+    const arquivo = $("#mCapa").files[0];
+    try{
+      let id = livro?.id, capa_url = livro?.capa_url || null;
+      if(!id){
+        let slug = slugify(titulo), tentativa=0;
+        while(true){
+          const { data: existe } = await supabase.from("livros").select("id").eq("slug",slug).maybeSingle();
+          if(!existe) break;
+          tentativa++; slug = slugify(titulo)+"-"+(tentativa+1);
+        }
+        const { data, error } = await supabase.from("livros").insert({
+          autora_id: S.session.user.id, titulo, slug, sinopse, cor_destaque: corEscolhida, status:"rascunho"
+        }).select().single();
+        if(error) throw error;
+        id = data.id;
+      } else {
+        const { error } = await supabase.from("livros").update({titulo, sinopse, cor_destaque:corEscolhida}).eq("id",id);
+        if(error) throw error;
+      }
+      if(arquivo){
+        const ext = (arquivo.name.split(".").pop()||"jpg").toLowerCase();
+        const path = `${id}/capa-${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage.from("capas").upload(path, arquivo, {upsert:true});
+        if(upErr) throw upErr;
+        const { data: pub } = supabase.storage.from("capas").getPublicUrl(path);
+        capa_url = pub.publicUrl;
+        await supabase.from("livros").update({capa_url}).eq("id",id);
+      }
+      bg.remove(); toast("Livro salvo."); painelLivro=null; renderListaLivros();
+    }catch(e){ $("#mMsg").textContent = "Erro: "+(e.message||e); }
+  };
+}
+
+async function renderLivroPainel(){
+  const body = $("#pBody");
+  const l = painelLivro;
+  body.append(el(`
+    <button class="btn" id="voltarLivros">‹ Meus livros</button>
+    <h2 class="serif" style="margin:10px 0 4px">${esc(l.titulo)}</h2>
+    <div id="listaCap" class="loading">Carregando capítulos…</div>
+    <button class="btn primary wide" id="novoCap" style="margin-top:10px">+ Novo capítulo</button>`));
+  $("#voltarLivros").onclick = ()=>{ painelLivro=null; SCREENS.painel.render(); };
+  $("#novoCap").onclick = ()=>{ painelCap=null; abrirEditorCapitulo(l); };
+  const { data: caps } = await supabase.from("capitulos").select("*").eq("livro_id",l.id).order("ordem");
+  const lc = $("#listaCap"); lc.innerHTML = "";
+  if(!caps || !caps.length) lc.append(el(`<p class="mut small">Nenhum capítulo ainda.</p>`));
+  (caps||[]).forEach((c,i)=>{
+    const row = el(`<div class="capitulo-row">
+      <div class="ord"><button data-d="-1">▲</button><button data-d="1">▼</button></div>
+      <b class="grow">${esc(c.titulo)}</b>
+      <span class="pill ${c.status==='publicado'?'green':'muted'}">${esc(c.status)}</span>
+      <button class="btn small" data-a="editar">Editar</button>
+      <button class="btn small danger" data-a="apagar">✕</button>
+    </div>`);
+    row.querySelector('[data-a="editar"]').onclick = ()=>{ painelCap=c; abrirEditorCapitulo(l,c); };
+    row.querySelector('[data-a="apagar"]').onclick = async ()=>{
+      if(!confirm(`Apagar o capítulo "${c.titulo}"?`)) return;
+      await supabase.from("capitulos").delete().eq("id",c.id);
+      renderLivroPainel();
+    };
+    row.querySelectorAll("[data-d]").forEach(btn=> btn.onclick = async ()=>{
+      const dir = +btn.dataset.d; const viz = (caps||[]);
+      const j = i+dir; if(j<0||j>=viz.length) return;
+      const outro = viz[j];
+      await Promise.all([
+        supabase.from("capitulos").update({ordem: outro.ordem}).eq("id",c.id),
+        supabase.from("capitulos").update({ordem: c.ordem}).eq("id",outro.id),
+      ]);
+      renderLivroPainel();
+    });
+    lc.append(row);
+  });
+}
+
+function abrirEditorCapitulo(livro, cap){
+  const bg = el(`<div class="modal"><div class="modalbox">
+    <h2>${cap?"Editar capítulo":"Novo capítulo"}</h2>
+    <input class="field" id="cTitulo" placeholder="Título do capítulo" value="${esc(cap?.titulo||"")}" style="margin-bottom:8px">
+    <div class="tabs" id="cTabs"><button data-v="escrever" class="on">Escrever</button><button data-v="ver">Ver como ficou</button></div>
+    <textarea class="field" id="cConteudo" rows="14" style="margin-bottom:8px;font-family:'Lora',serif">${esc(cap?.conteudo||"")}</textarea>
+    <div id="cPreview" class="leitura-texto hidden" style="margin-bottom:8px"></div>
+    <p class="small mut">Markdown simples: **negrito**, *itálico*, "# Título", linha começando com "- " vira lista, "> " vira citação.</p>
+    <button class="btn wide" id="cRevisar" style="margin:10px 0">✨ Revisar com IA</button>
+    <div id="cSugestoes"></div>
+    <div class="row wrap" style="margin-top:10px">
+      <button class="btn grow" id="cCancelar">Cancelar</button>
+      <button class="btn grow" id="cRascunho">Salvar rascunho</button>
+      <button class="btn primary grow" id="cPublicar">${cap?.status==='publicado'?'Já publicado ✓':'Publicar'}</button>
+    </div>
+    <p class="small mut" id="cMsg" style="margin-top:8px"></p>
+  </div></div>`);
+  document.body.append(bg);
+  $("#cTabs").querySelectorAll("button").forEach(b=> b.onclick = ()=>{
+    $("#cTabs").querySelectorAll("button").forEach(x=>x.classList.remove("on")); b.classList.add("on");
+    if(b.dataset.v==="ver"){ $("#cPreview").innerHTML = mdToHtml($("#cConteudo").value); $("#cPreview").classList.remove("hidden"); $("#cConteudo").classList.add("hidden"); }
+    else { $("#cPreview").classList.add("hidden"); $("#cConteudo").classList.remove("hidden"); }
+  });
+  $("#cCancelar").onclick = ()=> bg.remove();
+
+  async function salvar(novoStatus){
+    const titulo = $("#cTitulo").value.trim();
+    const conteudo = $("#cConteudo").value;
+    if(!titulo){ $("#cMsg").textContent = "Dá um título pro capítulo."; return; }
+    $("#cMsg").textContent = "Salvando...";
+    try{
+      if(cap?.id){
+        const patch = {titulo, conteudo}; if(novoStatus) patch.status = novoStatus;
+        const { error } = await supabase.from("capitulos").update(patch).eq("id",cap.id);
+        if(error) throw error;
+      } else {
+        const { data: existentes } = await supabase.from("capitulos").select("ordem").eq("livro_id",livro.id).order("ordem",{ascending:false}).limit(1);
+        const ordem = existentes && existentes[0] ? existentes[0].ordem+1 : 0;
+        const { data, error } = await supabase.from("capitulos").insert({
+          livro_id: livro.id, titulo, conteudo, ordem, status: novoStatus||"rascunho"
+        }).select().single();
+        if(error) throw error;
+        cap = data;
+      }
+      toast(novoStatus==="publicado" ? "Publicado!" : "Rascunho salvo.");
+      bg.remove(); renderLivroPainel();
+    }catch(e){ $("#cMsg").textContent = "Erro: "+(e.message||e); }
+  }
+  $("#cRascunho").onclick = ()=> salvar(null);
+  $("#cPublicar").onclick = ()=> salvar("publicado");
+
+  $("#cRevisar").onclick = async ()=>{
+    const texto = $("#cConteudo").value.trim();
+    if(!texto){ $("#cMsg").textContent = "Escreva algo antes de revisar."; return; }
+    $("#cRevisar").disabled = true; $("#cRevisar").textContent = "Revisando...";
+    $("#cMsg").textContent = "";
+    try{
+      const { data: sess } = await supabase.auth.getSession();
+      const resp = await fetch("/api/revisar", {
+        method:"POST",
+        headers:{ "content-type":"application/json", "authorization":`Bearer ${sess.session.access_token}` },
+        body: JSON.stringify({texto})
+      });
+      const json = await resp.json();
+      if(!resp.ok) throw new Error(json.erro||"Falha na revisão.");
+      const sugWrap = $("#cSugestoes");
+      sugWrap.innerHTML = `<p class="small" style="margin:6px 0"><b>IA:</b> ${esc(json.comentario_geral||"")}</p>`;
+      if(!json.sugestoes || !json.sugestoes.length){ sugWrap.innerHTML += `<p class="small mut">Nenhuma sugestão — está bem escrito! 🙂</p>`; }
+      (json.sugestoes||[]).forEach(s=>{
+        const card = el(`<div class="sugestao">
+          <div class="de">${esc(s.trecho_original)}</div>
+          <div class="para">→ ${esc(s.sugestao)}</div>
+          ${s.motivo?`<div class="motivo">${esc(s.motivo)}</div>`:""}
+          <div class="acoes"><button data-a="aceitar">Aceitar</button><button data-a="ignorar">Ignorar</button></div>
+        </div>`);
+        card.querySelector('[data-a="aceitar"]').onclick = ()=>{
+          const ta = $("#cConteudo");
+          if(ta.value.includes(s.trecho_original)){ ta.value = ta.value.replace(s.trecho_original, s.sugestao); toast("Aplicado no texto."); }
+          else toast("Não achei o trecho exato — ajuste manualmente.");
+          card.remove();
+        };
+        card.querySelector('[data-a="ignorar"]').onclick = ()=> card.remove();
+        sugWrap.append(card);
+      });
+    }catch(e){ $("#cMsg").textContent = "Erro na revisão: "+(e.message||e); }
+    $("#cRevisar").disabled = false; $("#cRevisar").textContent = "✨ Revisar com IA";
+  };
+}
+
+async function renderAparencia(){
+  const body = $("#pBody");
+  const cfg = S.config || {};
+  body.append(el(`
+    <div class="card">
+      <h2>Aparência do site</h2>
+      <label class="small mut">Nome do site</label>
+      <input class="field" id="aNome" value="${esc(cfg.nome_site||"")}" style="margin-bottom:8px">
+      <label class="small mut">Subtítulo</label>
+      <input class="field" id="aSub" value="${esc(cfg.subtitulo||"")}" style="margin-bottom:8px">
+      <label class="small mut">Bio da autora</label>
+      <textarea class="field" id="aBio" rows="3" style="margin-bottom:8px">${esc(cfg.bio_autora||"")}</textarea>
+      <label class="small mut">Foto da autora (imagem)</label>
+      <input class="field" id="aFoto" type="file" accept="image/*" style="margin-bottom:10px">
+      <label class="small mut">Cor principal do site</label>
+      <div class="swatches" id="aCores" style="margin-bottom:12px"></div>
+      <button class="btn primary wide" id="aSalvar">Salvar aparência</button>
+      <p class="small mut" id="aMsg" style="margin-top:8px"></p>
+    </div>`));
+  const CORES = ["#8a5a3b","#6b4226","#b08968","#4c6b54","#4a6fa5","#9a3b4e","#7a6f58"];
+  let cor = cfg.cor_primaria || CORES[0];
+  const cw = $("#aCores");
+  CORES.forEach(c=>{
+    const s = el(`<button class="swatch ${c===cor?'on':''}" style="background:${c}"></button>`);
+    s.onclick = ()=>{ cor=c; cw.querySelectorAll(".swatch").forEach(x=>x.classList.remove("on")); s.classList.add("on"); };
+    cw.append(s);
+  });
+  $("#aSalvar").onclick = async ()=>{
+    $("#aMsg").textContent = "Salvando...";
+    try{
+      let foto_autora_url = cfg.foto_autora_url || null;
+      const arquivo = $("#aFoto").files[0];
+      if(arquivo){
+        const ext = (arquivo.name.split(".").pop()||"jpg").toLowerCase();
+        const path = `autora/foto-${Date.now()}.${ext}`;
+        const { error: upErr } = await supabase.storage.from("capas").upload(path, arquivo, {upsert:true});
+        if(upErr) throw upErr;
+        foto_autora_url = supabase.storage.from("capas").getPublicUrl(path).data.publicUrl;
+      }
+      const patch = {
+        nome_site: $("#aNome").value.trim()||"Letras de Fé",
+        subtitulo: $("#aSub").value.trim(),
+        bio_autora: $("#aBio").value.trim(),
+        cor_primaria: cor, foto_autora_url,
+      };
+      const { error } = await supabase.from("config_site").update(patch).eq("id",1);
+      if(error) throw error;
+      S.config = Object.assign({}, cfg, patch);
+      aplicarTema(S.config);
+      toast("Aparência atualizada.");
+    }catch(e){ $("#aMsg").textContent = "Erro: "+(e.message||e); }
+  };
+}
+
+/* ============================================================
+   AUTENTICAÇÃO — carrega profile quando há sessão
+   ============================================================ */
+async function carregarProfile(session){
+  S.session = session;
+  if(!session){ S.profile = null; atualizarNav(); return; }
+  const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
+  S.profile = data && data.role === "autora" ? data : null;
+  atualizarNav();
+}
+function atualizarNav(){
+  $("#navEntrar").classList.toggle("hidden", !!S.session);
+  $("#navPainel").classList.toggle("hidden", !S.profile);
+}
+supabase.auth.onAuthStateChange((_evt, session)=>{ carregarProfile(session); });
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function boot(){
+  root.append(el(`<div class="loading">Carregando…</div>`));
+  try{
+    const [{data:{session}}, {data:cfg, error:cfgErr}] = await Promise.all([
+      supabase.auth.getSession(),
+      supabase.from("config_site").select("*").eq("id",1).maybeSingle(),
+    ]);
+    if(cfgErr) throw cfgErr;
+    S.config = cfg || {};
+    aplicarTema(S.config);
+    await carregarProfile(session);
+    go("inicio");
+  }catch(e){
+    console.error("Falha ao iniciar:", e);
+    root.innerHTML = "";
+    root.append(el(`<div class="card">
+      <h2>Não consegui conectar</h2>
+      <p class="mut small">O site não conseguiu falar com o banco de dados. Se você é quem está configurando
+      este site, confira <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> no início do
+      <code>index.html</code> e se rodou o <code>supabase-setup.sql</code>.</p>
+      <p class="small mut">Detalhe técnico: ${esc(e.message||String(e))}</p>
+      <button class="btn primary wide" id="tentarDeNovo" style="margin-top:10px">Tentar de novo</button>
+    </div>`));
+    $("#tentarDeNovo").onclick = boot;
+  }
+}
+boot();
+</script>
+</body>
+</html>

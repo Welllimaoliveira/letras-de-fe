@@ -1,0 +1,7 @@
+{
+  "name": "letras-de-fe",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Site de publicação de livros e escritos da autora, com revisão assistida por IA."
+}
