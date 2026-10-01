@@ -375,9 +375,11 @@ SCREENS.entrar = {
       const email=$("#eEmail").value.trim(), senha=$("#eSenha").value;
       if(!email||!senha){ msg.textContent="Preencha e-mail e senha."; return; }
       msg.textContent="Entrando...";
-      const { error } = await supabase.auth.signInWithPassword({email, password:senha});
+      const { data, error } = await supabase.auth.signInWithPassword({email, password:senha});
       if(error){ msg.textContent = "Não consegui entrar: "+error.message; return; }
-      msg.textContent = "";
+      await carregarProfile(data.session);
+      if(S.profile) go("painel");
+      else msg.textContent = "Login ok, mas esta conta não tem acesso de autora.";
     };
     $("#eCriar").onclick = async ()=>{
       const email=$("#eEmail").value.trim(), senha=$("#eSenha").value;
@@ -400,6 +402,7 @@ let painelCap = null;     // capítulo em edição (objeto ou null = novo)
 SCREENS.painel = {
   render(){
     if(!S.profile){ go("entrar"); return; }
+    root.innerHTML = "";
     root.append(el(`
       <div>
         <div class="tabs" id="pTabs">
@@ -525,6 +528,7 @@ function abrirModalLivro(livro){
 
 async function renderLivroPainel(){
   const body = $("#pBody");
+  body.innerHTML = "";
   const l = painelLivro;
   body.append(el(`
     <button class="btn" id="voltarLivros">‹ Meus livros</button>
@@ -655,6 +659,7 @@ function abrirEditorCapitulo(livro, cap){
 
 async function renderAparencia(){
   const body = $("#pBody");
+  body.innerHTML = "";
   const cfg = S.config || {};
   body.append(el(`
     <div class="card">
@@ -716,6 +721,7 @@ async function carregarProfile(session){
   const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
   S.profile = data && data.role === "autora" ? data : null;
   atualizarNav();
+  if(S.profile && current === "entrar") go("painel");
 }
 function atualizarNav(){
   $("#navEntrar").classList.toggle("hidden", !!S.session);
