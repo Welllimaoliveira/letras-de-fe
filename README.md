@@ -49,6 +49,31 @@ autor (Fala Real, Estuda Aí), reaproveitando o padrão de auth do Fala Real.
 No site, a autora clica em **Entrar** (rodapé do topo) → **Criar conta** com o
 e-mail que foi configurado no passo 1.3 → já entra como autora, com acesso ao Painel.
 
+## Visual e leitura
+
+O site segue o estilo de uma biblioteca digital: página inicial com acervo em grade e filtros por categoria,
+modal do livro, página do livro (capa, páginas, leituras, sumário) e **leitor paginado** (capa → páginas,
+sumário, marcador, tema claro/sépia/noturno, tamanho e fonte, progresso salvo no aparelho do leitor).
+Links diretos: `#/livro/<slug>` e `#/ler/<slug>/<id-do-capitulo>`.
+
+## Painel da autora
+
+- **Livros**: título, autora, categoria, sinopse, capa (upload) ou capa gerada, rascunho/publicado, ordem.
+- **Capítulos**: escrever direto ou **importar PDF / Word (.docx) / texto** — o texto é extraído no navegador,
+  separado em parágrafos e (opcionalmente) dividido em capítulos pelos títulos “Capítulo N”.
+- **Revisão com IA** (passo 2 do editor): textos longos são enviados em partes; a IA só sugere, a autora aceita ou ignora.
+- **Aparência**: nome, frases da página inicial, bio/foto, cor principal.
+
+## Testar sem banco (desenvolvimento)
+
+`python dev/serve.py 8791` e abra `http://localhost:8791/?mock=1` (leitor) ou `?mock=admin` (autora).
+Só funciona em localhost; usa dados falsos em memória (`dev/mock.js`).
+
+## Migrações
+
+`migrations/002-leitor-paginado.sql` adiciona autor/categoria/leituras, contagem de caracteres,
+textos da página inicial e o contador de leituras. Rode no SQL Editor do Supabase (idempotente).
+
 ## Estrutura
 
 ```

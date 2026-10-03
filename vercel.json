@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "functions": {
+    "api/revisar.js": { "maxDuration": 60 }
+  },
   "headers": [
     {
       "source": "/(.*)",
